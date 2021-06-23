@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .response {
+        width: 200px;
+        height: 150px;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="btn">click to sent request</button>
+    <div class="response"></div>
+
+    <script>
+      let btn = document.querySelector(".btn");
+      let response = document.querySelector(".response");
+
+      btn.addEventListener("click", () => {
+        //1.創建xhr物件
+        let xhr = new XMLHttpRequest();
+
+        //2.設置請求方法和url
+        xhr.open("GET", "http://127.0.0.1:8000/server");
+
+        //4.事件監聽 處理返回結果
+        xhr.onreadystatechange = function () {
+          //readyState是xhr物件的屬性
+          //0：未發送
+          //1：已open()
+          //2：已send()
+          //3：返回部分結果
+          //4：返回完成
+          if (xhr.readyState === 4) {
+            //判斷響應狀態碼 http status code：2xx表示成功
+            if (xhr.status >= 200 && xhr.status < 300) {
+              //處理結果 response包含行、頭、空行(無用)、體
+              console.log(xhr.status); //響應狀態碼 status code
+              console.log(xhr.statusText); //響應字符串
+              console.log(xhr.getAllResponseHeaders()); //所有響應頭
+              console.log(xhr.response); //響應體
+
+              response.innerHTML = xhr.response;
+            }
+          }
+        };
+        //3.發送
+        xhr.send();
+      });
+    </script>
+  </body>
+</html>
