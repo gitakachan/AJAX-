@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .content {
+        width: 200px;
+        height: 100px;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="btn">click to sent xhr</button>
+    <div class="content"></div>
+
+    <script>
+      let btn = document.querySelector(".btn");
+      let content = document.querySelector(".content");
+      let xhr = null;
+      let isSending = false; //是否正在發請求
+
+      btn.addEventListener("click", () => {
+        //判斷是否正在發請求
+        if (isSending) {
+          xhr.abort(); //若正在發請求則取消原本的請求
+        }
+
+        //創建新請求
+        xhr = new XMLHttpRequest();
+
+        //修改成true
+        isSending = true;
+        
+        xhr.open("GET", "http://127.0.0.1:8000/");
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            //請求返回完成
+            isSending = false;
+
+            if (xhr.status >= 200 && xhr.status < 300) {
+              content.innerHTML = xhr.response;
+            }
+          }
+        };
+        xhr.send();
+      });
+    </script>
+  </body>
+</html>
