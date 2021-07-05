@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <label for="username">帳號：</label>
+    <input type="text" id="username" />
+    <p></p>
+
+    <script>
+      let input = document.querySelector("input");
+      let p = document.querySelector("p");
+      //handle function
+      function handle(data) {
+        input.style.border = "1px solid red";
+        p.innerHTML = data.msg;
+      }
+
+      //綁定事件
+      input.onblur = function () {
+        let username = this.value;
+        //向服務端發送請求 檢測帳號是否存在 （沒有數據庫所以這裡都是返回帳號已存在
+        let script = document.createElement("script");
+        script.src = "http://127.0.0.1:8000/jsonp";
+        document.body.appendChild(script);
+      };
+    </script>
+  </body>
+</html>
