@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button class="get">GET</button>
+    <button class="post">POST</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
+
+    <script>
+      let get = document.querySelector(".get");
+      let post = document.querySelector(".post");
+
+      /*joke api
+      随机获取笑话的接口
+      url：https://autumnfish.cn/api/joke/list
+      方法：get
+      参数：num(笑话条数，类型为数字)
+      响应内容：JSON
+      */
+      get.onclick = function () {
+        axios.get("https://autumnfish.cn/api/joke/list?num=2").then(
+          (response) => {
+            console.log(response.data.jokes[0]);
+            console.log(response.data.jokes[1]);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      };
+
+      /*
+    用户注册-json格式数据提交
+    url：https://autumnfish.cn/api/user/reg
+    方法：post
+    参数：username(string 不能为空
+    响应内容：注册成功或失败
+    */
+      post.onclick = function () {
+        axios
+          .post("https://autumnfish.cn/api/user/reg", { username: "aloj" })
+          .then(
+            (response) => {
+              console.log(response.data);
+            },
+            (error) => [console.log(error)]
+          );
+      };
+    </script>
+  </body>
+</html>
